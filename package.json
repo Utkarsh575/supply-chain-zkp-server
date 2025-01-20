@@ -1,0 +1,21 @@
+{
+  "name": "supply-chain-zkp-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js",
+    "compile": "bash compile.sh"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "circomlibjs": "^0.1.7",
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9",
+    "snarkjs": "^0.7.5"
+  }
+}
