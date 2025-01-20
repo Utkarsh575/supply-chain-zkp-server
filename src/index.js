@@ -12,12 +12,12 @@ app.use(bodyParser.json());
 
 // Storage structure
 const STORAGE_DIR = './proofs';
-const CIRCUIT_DIR = './circuit';
+// const CIRCUIT_DIR = './circuit';
 
 // Ensure storage directories exist
 async function initializeDirectories() {
     await fs.mkdir(STORAGE_DIR, { recursive: true });
-    await fs.mkdir(CIRCUIT_DIR, { recursive: true });
+    // await fs.mkdir(CIRCUIT_DIR, { recursive: true });
 }
 
 // Helper function to generate unique ID
