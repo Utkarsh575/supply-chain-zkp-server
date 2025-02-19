@@ -17,3 +17,60 @@ curl -X POST http://localhost:3000/api/add-manufacturing-data/YOUR_PROOF_ID \
 "mfgDate": "1705708800",
 "expiryDate": "1737331200"
 }'
+
+```mermaid
+graph LR;
+    subgraph Off-Chain Processing
+        A[Producer] -->|Generates Product Data| B[Central Server];
+        B -->|Stores Encrypted Data SHA256| C[Database];
+        D[Manufacturer] -->|Receives Product Data| E[Adds MFG Date, Expiry];
+        E -->|Sends Updated Data| B;
+        B -->|Generates zk-SNARK Proofs| F[zk-SNARK Module];
+        F -->|Sends Proofs| G[zk-Rollup Aggregation];
+    end
+
+    subgraph On-Chain Processing
+        G -->|Batches Proofs| H[Layer-2 Blockchain];
+        H -->|Verifies zk-Rollups| I[Smart Contract];
+        I -->|Ensures Integrity & Privacy| H;
+    end
+
+    subgraph Verification
+        J[End-User / Third Party] -->|Scans QR Code| K[Server Endpoint];
+        K -->|Retrieves Proof| L[Validates Proof Using zk-SNARKs];
+        L -->|Displays Verification Result| J;
+    end
+```
+
+
+```mermaid
+graph TD;
+
+    %% Off-Chain Processing
+    subgraph Off-Chain Processing
+        A[Producer] -->|Generates Product Data| B[Central Server];
+        B -->|Stores Encrypted Data SHA256 | C[Database];
+        D[Manufacturer] -->|Receives Product Data| E[Adds MFG Date, Expiry];
+        E -->|Sends Updated Data| B;
+    end
+
+    %% zk-SNARK Proof Generation & zk-Rollup Aggregation
+    subgraph zk-SNARK & zk-Rollup Aggregation
+        B -->|Generates zk-SNARK Proofs| F[zk-SNARK Module];
+        F -->|Sends Proofs| G[zk-Rollup Aggregation];
+        G -->|Batches Proofs| H[Layer-2 Blockchain];
+    end
+
+    %% On-Chain Verification
+    subgraph On-Chain Verification
+        H -->|Verifies zk-Rollups| I[Smart Contract];
+        I -->|Ensures Integrity & Privacy| H;
+    end
+
+    %% End-User Verification via QR Code
+    subgraph End-User Verification
+        J[End-User / Third Party] -->|Scans QR Code| K[Server Endpoint];
+        K -->|Retrieves Proof| L[Validates Proof Using zk-SNARKs];
+        L -->|Displays Verification Result| J;
+    end
+```
