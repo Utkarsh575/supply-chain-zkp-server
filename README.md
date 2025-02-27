@@ -19,6 +19,35 @@ curl -X POST http://localhost:3000/api/add-manufacturing-data/YOUR_PROOF_ID \
 "expiryDate": "1772304132"
 }'
 
+# Verify Link
+
+http://localhost:3000/api/verify/hashed/YOUR_PROOF_HASH
+
+# Get all proofs and their status
+
+http://localhost:3000/api/get-proof-status/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------CHARTS------------------------------
+
 ```mermaid
 graph LR;
     subgraph Off-Chain Processing
@@ -42,7 +71,6 @@ graph LR;
         L -->|Displays Verification Result| J;
     end
 ```
-
 
 ```mermaid
 graph TD;
@@ -75,12 +103,3 @@ graph TD;
         L -->|Displays Verification Result| J;
     end
 ```
-
-# Verify Link
-
-http://localhost:3000/api/verify/hashed/
-
-# Get all proofs and their status
-
-http://localhost:3000/api/get-proof-status/
-
