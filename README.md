@@ -9,7 +9,7 @@ curl -X POST http://localhost:3000/api/submit-farm-data \
 "grade": "A"
 }'
 
-# Then, using the proofId from the response above
+# Then, using the proofId from the response above (note batch id is number here)
 
 curl -X POST http://localhost:3000/api/add-manufacturing-data/YOUR_PROOF_ID \
 -H "Content-Type: application/json" \
@@ -26,25 +26,6 @@ http://localhost:3000/api/verify/hashed/YOUR_PROOF_HASH
 # Get all proofs and their status
 
 http://localhost:3000/api/get-proof-status/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 -----------------------------------CHARTS------------------------------
 
