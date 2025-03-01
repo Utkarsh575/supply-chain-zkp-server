@@ -6,9 +6,18 @@ const crypto = require("crypto");
 const bodyParser = require("body-parser");
 const util = require("util");
 const execPromise = util.promisify(exec);
+const cors = require("cors");
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3001", // Allow requests from frontend
+    methods: ["GET", "POST"], // Allow only required methods
+    allowedHeaders: ["Content-Type"], // Allow necessary headers
+  })
+);
 
 // Storage structure
 const STORAGE_DIR = "./proofs";

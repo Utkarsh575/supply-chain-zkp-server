@@ -21,7 +21,7 @@ curl -X POST http://localhost:3000/api/add-manufacturing-data/YOUR_PROOF_ID \
 
 # Verify Link
 
-http://localhost:3000/api/verify/hashed/YOUR_PROOF_HASH
+http://localhost:3000/api/verify/hashed/340202edeb96ad9cbeec44d3c7692e44d9ee77696f340de0696d4a427ed0e66b
 
 # Get all proofs and their status
 
