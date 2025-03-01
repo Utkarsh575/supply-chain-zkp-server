@@ -1,17 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { QRCodeCanvas } from "qrcode.react";
 
 export default function ProofTable() {
   const [proofs, setProofs] = useState([]);
   const [qrUrl, setQrUrl] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const pathname = usePathname(); // Get current route
 
   useEffect(() => {
     const fetchProofs = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/get-proof-status");
+        const response = await fetch(
+          "http://localhost:3000/api/get-proof-status"
+        );
         const data = await response.json();
         if (data.success) {
           setProofs(data.proofs);
@@ -45,21 +49,57 @@ export default function ProofTable() {
         <table className="min-w-full bg-white border border-gray-300 text-black">
           <thead>
             <tr className="bg-gray-100 text-black">
-              {["Proof ID", "Farm ID", "Batch ID", "Grade", "MFG Date", "Expiry Date", "Status", "QR"].map((header) => (
-                <th key={header} className="px-4 py-2 border text-black">{header}</th>
-              ))}
+              <th className="px-4 py-2 border text-black">Proof ID</th>
+              {pathname === "/farmer" && (
+                <>
+                  <th className="px-4 py-2 border text-black">Farm ID</th>
+                  <th className="px-4 py-2 border text-black">Batch ID</th>
+                </>
+              )}
+              <th className="px-4 py-2 border text-black">Grade</th>
+              <th className="px-4 py-2 border text-black">MFG Date</th>
+              <th className="px-4 py-2 border text-black">Expiry Date</th>
+              <th className="px-4 py-2 border text-black">Status</th>
+              <th className="px-4 py-2 border text-black">QR</th>
             </tr>
           </thead>
           <tbody>
+            {proofs.length === 0 && (
+              <tr>
+                <td colSpan={pathname === "/farmer" ? 8 : 6} className="text-center p-4">
+                  No proofs found.
+                </td>
+              </tr>
+            )}
             {proofs.map((proof) => (
               <tr key={proof.proofId} className="border text-black">
                 <td className="px-4 py-2 border">{proof.proofId}</td>
-                <td className="px-4 py-2 border">{proof.farmData.farmId}</td>
-                <td className="px-4 py-2 border">{proof.farmData.batchId}</td>
+                {pathname === "/farmer" && (
+                  <>
+                    <td className="px-4 py-2 border">{proof.farmData.farmId}</td>
+                    <td className="px-4 py-2 border">{proof.farmData.batchId}</td>
+                  </>
+                )}
                 <td className="px-4 py-2 border">{proof.farmData.grade}</td>
-                <td className="px-4 py-2 border">{proof.manufacturingData?.mfgDate || "N/A"}</td>
-                <td className="px-4 py-2 border">{proof.manufacturingData?.expiryDate || "N/A"}</td>
-                <td className="px-4 py-2 border">{proof.status}</td>
+                <td className="px-4 py-2 border">
+                  {proof.manufacturingData?.mfgDate || "N/A"}
+                </td>
+                <td className="px-4 py-2 border">
+                  {proof.manufacturingData?.expiryDate || "N/A"}
+                </td>
+                <td className="px-4 py-2 border">
+                  <span
+                    className={`px-2 py-1 rounded font-semibold text-sm ${
+                      proof.status === "proof_generated"
+                        ? "bg-green-200 text-green-800"
+                        : proof.status === "pending_manufacturer"
+                        ? "bg-yellow-200 text-yellow-800"
+                        : "bg-gray-200 text-gray-800"
+                    }`}
+                  >
+                    {proof.status}
+                  </span>
+                </td>
                 <td className="px-4 py-2 border">
                   <button
                     className={`px-3 py-1 rounded ${
